@@ -1,0 +1,1 @@
+newman run https://api.getpostman.com/collections/b8bc6a3a-acee-48d1-abc3-b4dc73c28c8d?apikey=PMAK-621a2f35c1d3e86c9ac47ee4-9c70796332ebc1e847379169f0b5c541d9 --environment "workspace.postman_globals.json" -d "pruebaCsv.csv" -n 3
