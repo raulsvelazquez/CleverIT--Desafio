@@ -1,0 +1,319 @@
+{
+	"info": {
+		"_postman_id": "b8bc6a3a-acee-48d1-abc3-b4dc73c28c8d",
+		"name": "Clever",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Ejercicio 2 (QAA-02)",
+			"item": [
+				{
+					"name": "Recursos - Posts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate array length is 100\", function () {\r",
+									"    pm.expect(jsonData).have.lengthOf(100);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate quantity posts\", function (){\r",
+									"    pm.expect(jsonData).not.equal(99);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate user properties\", function () {\r",
+									"    pm.expect(jsonData[0].userId).to.be.eql(1);\r",
+									"    pm.expect(jsonData[0].id).to.be.eql(1);\r",
+									"    pm.expect(jsonData[0].title).to.be.contain(\"sunt aut facere repellat provident occaecati excepturi optio reprehenderit\");\r",
+									"    pm.expect(jsonData[0].body).to.include(\"sunt\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate that the property exists\", function (){\r",
+									"    pm.expect(jsonData[0]).to.have.property(\"userId\");\r",
+									"    pm.expect(jsonData[0]).to.have.property(\"id\");\r",
+									"    pm.expect(jsonData[0]).to.have.property(\"title\");\r",
+									"    pm.expect(jsonData[0]).to.have.property(\"body\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate the field type\", function (){\r",
+									"    pm.expect(jsonData[0].userId).to.be.a(\"number\");\r",
+									"    pm.expect(jsonData[0].id).to.be.a(\"number\");\r",
+									"    pm.expect(jsonData[0].title).to.be.a(\"string\");\r",
+									"    pm.expect(jsonData[0].body).to.be.a(\"string\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate that the object does not exist\", function (){\r",
+									"    pm.expect(jsonData).to.not.have.any.keys(\"noExiste\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response less than  200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate that header exist\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    pm.response.to.have.header(\"Connection\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type header is application/json\", () => {\r",
+									"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/posts",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recursos - Posts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function (){\r",
+									"    var expectResponseCode = pm.variables.get(\"statusCode\")\r",
+									"    pm.response.to.have.status(expectResponseCode);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Attribute id is 101\", function (){\r",
+									"    jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id).to.eql(101);\r",
+									"});\r",
+									"const postsSchema = {\r",
+									"   userId : '',\r",
+									"   title: '',\r",
+									"   body: ''\r",
+									"}\r",
+									"\r",
+									"const body = JSON.parse(pm.request.body.raw);\r",
+									"const sameSchema = JSON.stringify(Object.keys(postsSchema)) === JSON.stringify(Object.keys(body));\r",
+									"\r",
+									"pm.test(\"Same schema\", () => {\r",
+									"    pm.expect(true).to.be.eql(sameSchema);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"userId\":{{userId}},\r\n   \"title\":\"{{title}}\",\r\n   \"body\":\"{{body}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/posts",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recursos - Photos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"More tests\", function () {\r",
+									"    pm.expect(jsonData[0].url).to.match(/https/);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate url\", function () {\r",
+									"    pm.expect(jsonData[0].url).to.eql(\"https://via.placeholder.com/600/92c952\");\r",
+									"    pm.expect(jsonData[0].url).to.be.a('string');\r",
+									"    pm.expect(jsonData[0].url).to.include('https://via.placeholder.com');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate quantity posts\", function (){\r",
+									"    pm.expect(jsonData).not.equal(99);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate user properties\", function () {\r",
+									"    pm.expect(jsonData[0].albumId).to.be.eql(1);\r",
+									"    pm.expect(jsonData[0].id).to.be.eql(1);\r",
+									"    pm.expect(jsonData[0].url).to.be.contain(\"https://via.placeholder.com/600/92c952\");\r",
+									"    pm.expect(jsonData[0].thumbnailUrl).to.include(\"https\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate that the property exists\", function (){\r",
+									"    pm.expect(jsonData[0]).to.have.property(\"albumId\");\r",
+									"    pm.expect(jsonData[0]).to.have.property(\"id\");\r",
+									"    pm.expect(jsonData[0]).to.have.property(\"title\");\r",
+									"    pm.expect(jsonData[0]).to.have.property(\"url\");\r",
+									"    pm.expect(jsonData[0]).to.have.property(\"thumbnailUrl\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate the field type\", function (){\r",
+									"    pm.expect(jsonData[0].albumId).to.be.a(\"number\");\r",
+									"    pm.expect(jsonData[0].id).to.be.a(\"number\");\r",
+									"    pm.expect(jsonData[0].title).to.be.a(\"string\");\r",
+									"    pm.expect(jsonData[0].url).to.not.be.a(\"number\");\r",
+									"    pm.expect(jsonData[0].thumbnailUrl).to.not.be.a(\"boolean\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate that the object does not exist\", function (){\r",
+									"    pm.expect(jsonData).to.not.have.any.keys(\"noExiste\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response less than  300ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate that header exist\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    pm.response.to.have.header(\"Connection\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type header is application/json\", () => {\r",
+									"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/photos",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"photos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recurso - Users",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"    key: 'Content-Type',\r",
+									"    value: 'application/json'\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"The code appears in the list\", function () {\r",
+									"    console.log(jsonData);\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([202,200])\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate array is not empty\", function () {\r",
+									"    pm.expect(jsonData[0].address).to.not.be.empty;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate object address\", function () {\r",
+									"    pm.expect(jsonData[0]).to.have.property(\"address\");\r",
+									"    pm.expect(jsonData[0].address).to.have.property(\"street\");\r",
+									"    pm.expect(jsonData[0].address).to.have.property(\"suite\");\r",
+									"    pm.expect(jsonData[0].address).to.have.property(\"city\");\r",
+									"    pm.expect(jsonData[0].address).to.have.property(\"geo\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate that header exist\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    pm.response.to.have.header(\"Connection\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type header is application/json\", () => {\r",
+									"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"The code appears in the list\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([202,200])\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/Users",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"Users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://jsonplaceholder.typicode.com"
+		},
+		{
+			"key": "baseUrl",
+			"value": ""
+		},
+		{
+			"key": "contenido",
+			"value": ""
+		}
+	]
+}
