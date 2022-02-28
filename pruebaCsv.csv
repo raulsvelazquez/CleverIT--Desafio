@@ -1,9 +1,9 @@
 userId,title,body,statusCode,headerConnection,headerContent-Type
 1,pruebaChallenge,prueba,201,Connection,Content-Type
 1,TestAutomatizado,Test,201,Connection,Content-Type
-1,Escenario,EscenariodePrueba,201,Connection, Content-Type
+1,Escenario,EscenariodePrueba,201,Connection,Content-Type
 2,pruebaChallenge,prueba,201,Connection,Content-Type
-2,TestAutomatizado,Test,201,Connecti,Connection, Content-Type
+2,TestAutomatizado,Test,201,Connection,Content-Type
 3,pruebaChallenge,prueba,201,Connection,Content-Type
 3,TestAutomatizado,Test,201,Connection,Content-Type
 3,Escenario,EscenariodePrueba,201,Connection,Content-Type
